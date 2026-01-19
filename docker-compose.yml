@@ -1,0 +1,61 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: accounting-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./accounting-backend
+      dockerfile: Dockerfile
+    container_name: accounting-backend
+    restart: always
+    volumes:
+      - ./.env.example:/app/.env
+      - ./accounting-backend:/app
+    ports:
+      - "${BACKEND_PORT}:8001"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./accounting-frontend
+      dockerfile: Dockerfile
+    container_name: accounting-frontend
+    restart: always
+    volumes:
+      - ./.env.example:/app/.env
+      - ./accounting-frontend:/app
+      - /app/node_modules
+    ports:
+      - "${FRONTEND_PORT}:8000"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge

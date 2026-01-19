@@ -1,0 +1,70 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Node dependencies
+node_modules/
+
+# Build artifacts
+dist/
+dist-ssr/
+build/
+*.egg-info/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor/IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python/Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+db.sqlite3
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+
+# Build and IDE
+**/node_modules
+**/__pycache__
+**/dist
+**/build
+**/.npm-cache
+**/.vite
+**/.next
+**/.cache
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+.tmp/
+.vercel
+.netlify
